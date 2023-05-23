@@ -47,6 +47,12 @@ export class BlogContent extends Component {
       this.setState ({
         showAddForm: true
       })
+    };
+
+    handleAddFormHide = () => {
+      this.setState ({
+        showAddForm: false
+      })
     }
 
     render() {
@@ -67,8 +73,7 @@ export class BlogContent extends Component {
         <>
 
         {
-          this.state.showAddForm ? <AddPostForm/>
-          : null
+          this.state.showAddForm ? <AddPostForm handleAddFormHide = {this.handleAddFormHide}/> :null
         }
 
         <button onClick = {this.toggleBlog}>

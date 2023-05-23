@@ -18,6 +18,14 @@ button {
   border: none;
   background-color: unset;
   cursor: pointer;
+}
+
+input, textarea {
+  outline: unset;
+  border: 0;
+}
+
+input, button, textarea {
   font-family: "Nunito", sans-serif;
   font-size: 16px;
 }
