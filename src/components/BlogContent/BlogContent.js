@@ -55,6 +55,34 @@ export class BlogContent extends Component {
       })
     }
 
+    handleEscape = (e) => {
+      if (e.key === "Escape" && this.state.showAddForm) {
+        this.handleAddFormHide()
+      }
+    }
+
+    addNewBlogPost = (blogPost) => {
+
+      this.setState((state) => {
+        const posts = [...state.blogArr];
+        posts.push(blogPost);
+        localStorage.setItem("blogPosts", JSON.stringify(posts))
+        return{
+          blogArr: posts
+        }
+      })
+
+      this.handleAddFormHide()
+    }
+
+    componentDidMount() {
+      window.addEventListener("keyup", this.handleEscape)
+    }
+
+    componentWillUnmount() {
+      window.removeEventListener("keyup", this.handleEscape)
+    }
+
     render() {
       
     const BlogPosts = this.state.blogArr.map((item,pos) => {
@@ -70,10 +98,13 @@ export class BlogContent extends Component {
       )
     })
       return (
-        <>
-
-        {
-          this.state.showAddForm ? <AddPostForm handleAddFormHide = {this.handleAddFormHide}/> :null
+        <div class = "blogPage">
+          {this.state.showAddForm ? (
+          <AddPostForm 
+          blogArr={this.state.blogArr} 
+          addNewBlogPost = {this.addNewBlogPost}
+          />
+       ) :null
         }
 
         <button onClick = {this.toggleBlog}>
@@ -85,7 +116,9 @@ export class BlogContent extends Component {
           this.state.showBlog ?
         <>
         <h1>Blog</h1>
+        <div class = "addNewPost">
         <button class = "blackBtn" onClick={this.handleAddFormShow}>Создать новый пост</button>
+        </div>
         <div class="posts">
           {BlogPosts}
         </div>
@@ -93,7 +126,7 @@ export class BlogContent extends Component {
         : null
        }
 
-        </>
+        </div>
     )
     }
 }
